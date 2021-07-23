@@ -1,6 +1,8 @@
 package curso.springboot2.springboot2essential.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,10 @@ import curso.springboot2.springboot2essential.domain.Anime;
 @Service // Para tornar a classe um servico e Bean do Spring
 public class AnimeService {
 
-    private List<Anime> animes = List.of(new Anime(1L, "DBZ"), new Anime(2L, "Berseker"), new Anime(3L, "Boku No Hero"));
+    private static List<Anime> animes;
+    static {
+        animes = new ArrayList<>(List.of(new Anime(1L, "DBZ"), new Anime(2L, "Berseker"), new Anime(3L, "Boku No Hero")));
+    } 
 
     // private final AnimeRepository animeRepository;
 
@@ -32,5 +37,11 @@ public class AnimeService {
                         HttpStatus.BAD_REQUEST, // Determina tipo de saída, definido no padrão de projeto
                         "Anime not found" // Determina mensagem de retorno
         ));
+    }
+
+    public Anime save(Anime anime) {
+        anime.setId(ThreadLocalRandom.current().nextLong(4, 100000)); // Pega um número aleatório
+        animes.add(anime);
+        return anime;
     }
 }

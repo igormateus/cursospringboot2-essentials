@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,7 +39,7 @@ public class AnimeController {
 
     // localhost:8080/animes/list
     // @GetMapping(path = "list") // Indica que ele sera chamado no metodo GET para o endereco '/list'
-    @GetMapping // Acessa a raiz a partir do metodo get
+    @GetMapping // Spring mapeia e joga aqui requisições GET na raiz
     public ResponseEntity<List<Anime>> list() {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); //Registra um log na tela de output
         return new ResponseEntity<>( // Tipo de saída de uma response
@@ -56,5 +58,20 @@ public class AnimeController {
     ){
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok(animeService.findById(id));
+    }
+
+    @PostMapping // Spring mapeia e joga aqui as requisições post
+    // Temos a possibilidade de retornar apenas o cod 201 (created)
+    // Ou retornar o ID criado, ou até mesmo o objeto inteiro criado
+    // @ResponseStatus(HttpStatus.CREATED) // Indica que esse status será 201 - Created
+    public ResponseEntity<Anime> save( // Nesse caso nós iremos retornar o objeto inteiro
+            @RequestBody Anime anime // Diz que está esperando um Body e usará o Jackson para 
+                                     // Transformar em Anime. Se o Jakson encontrar um JSON exatamente
+                                     // igual aos atributos de classe ele mapeia. Caso o nome da var
+                                     // seja diferente, o Jackson ignora a propriedade.
+    ) { 
+
+        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+        
     }
 }

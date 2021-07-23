@@ -10,5 +10,6 @@ import lombok.Data;
 @AllArgsConstructor // Gera construtor de todos os atributos pelo lombok
 public class Anime {
     private Long id;
+    // @JsonProperty("name_wanted") // Indica para o Jackson que essa propriedade se chamará name_wanted no json
     private String name;
 }
