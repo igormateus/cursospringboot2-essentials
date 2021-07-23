@@ -33,6 +33,6 @@ public class AnimeController {
     @GetMapping(path = "list") // Indica que ele sera chamado no metodo GET para o endereco '/list'
     public List<Anime> list() {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); //Registra um log na tela de output
-        return List.of(new Anime("DBZ"), new Anime("Berseker"));
+        return List.of(new Anime("DBZ"), new Anime("Berseker"), new Anime("Boku No Hero"));
     }
 }

@@ -24,6 +24,12 @@
 	<!-- Dependencias -->
 	<dependencies>
 
+		<!-- Implementa o HotSwap -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+
 		<!-- Conjunto de pacotes do spring para web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
