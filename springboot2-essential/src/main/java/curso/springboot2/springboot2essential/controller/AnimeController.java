@@ -3,7 +3,10 @@ package curso.springboot2.springboot2essential.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,8 +38,23 @@ public class AnimeController {
     // localhost:8080/animes/list
     // @GetMapping(path = "list") // Indica que ele sera chamado no metodo GET para o endereco '/list'
     @GetMapping // Acessa a raiz a partir do metodo get
-    public List<Anime> list() {
+    public ResponseEntity<List<Anime>> list() {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); //Registra um log na tela de output
-        return animeService.listAll();
+        return new ResponseEntity<>( // Tipo de saída de uma response
+                animeService.listAll(), // Conteudo da resposta que passará no JSON
+                HttpStatus.OK // Indica o status da resposta
+        );
+
+        // return ResponseEntity.ok(animeService.listAll()); // Outra forma de responder
+    }
+
+    @GetMapping(path = "/{id}") // Não pode ser duplicado sem um endpoint distinto;
+    // o tempo entre {} será o pathvareables chamado pelo @PathVariable
+    public ResponseEntity<Anime> findById(
+            @PathVariable // indica que a próxima variavel será preenchida com o id do endpoint
+            Long id
+    ){
+        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        return ResponseEntity.ok(animeService.findById(id));
     }
 }

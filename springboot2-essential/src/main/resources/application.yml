@@ -1,0 +1,7 @@
+
+server:
+    error:
+        # Função para esconder o stacktrace para o front
+        # por padrão é always
+        # on_param é usado para receber o trace caso seja adicionado ?trace=true no endpoint
+        include-stacktrace: never
