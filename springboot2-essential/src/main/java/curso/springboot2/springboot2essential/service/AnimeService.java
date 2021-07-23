@@ -48,4 +48,9 @@ public class AnimeService {
     public void delete(Long id) { // RFC7231 - Indepotência
         animes.remove(findById(id)); // Caso encontre, ele remove, caso não, ele retorna bad_request
     }
+
+    public void replace(Anime anime) {
+        delete(anime.getId()); // Procura e deleta. Se não achar, Erro Bad_request
+        animes.add(anime); // Adiciona Anime à lista
+    }
 }
