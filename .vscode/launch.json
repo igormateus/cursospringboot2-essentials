@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Springboot2EssentialApplication<springboot2-essential>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "curso.springboot2.springboot2essential.Springboot2EssentialApplication",
+            "projectName": "springboot2-essential",
+            "args": ""
+        }
+    ]
+}
