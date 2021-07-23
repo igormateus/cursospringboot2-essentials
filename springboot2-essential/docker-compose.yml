@@ -1,0 +1,19 @@
+version: '3.1'
+services:
+    db:
+        image: mysql
+        container_name: mysql
+        environment: 
+            MYSQL_ROOT_PASSWORD: root
+        ports: 
+        - "3306:3306" # Porta do pc x Porta do docker
+        volumes: 
+        - springboot2_data:/var/lib/mysql
+
+volumes:
+    springboot2_data:
+
+# docker-compose up   # para subir aplicacao
+# docker-ps           # lista containers em execução # -a Lista todos
+# CTRL + C            # parar container
+# docker-compose down # Retira container mas volume não é perdido
