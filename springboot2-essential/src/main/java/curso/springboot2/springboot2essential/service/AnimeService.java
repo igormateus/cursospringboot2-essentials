@@ -44,4 +44,8 @@ public class AnimeService {
         animes.add(anime);
         return anime;
     }
+
+    public void delete(Long id) { // RFC7231 - Indepotência
+        animes.remove(findById(id)); // Caso encontre, ele remove, caso não, ele retorna bad_request
+    }
 }
