@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import curso.springboot2.springboot2essential.domain.Anime;
+import curso.springboot2.springboot2essential.mapper.AnimeMapper;
 import curso.springboot2.springboot2essential.repository.AnimeRepository;
 import curso.springboot2.springboot2essential.requests.AnimePostRequestBody;
 import curso.springboot2.springboot2essential.requests.AnimePutRequestBody;
@@ -49,12 +50,18 @@ public class AnimeService {
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
 
-        return animeRepository.save( // Chama o repository para salvar
-            Anime.builder() // Construtor estático criado no modelo pelo Lombok
-                    .name(animePostRequestBody.getName()) // indica o dado ao construtor
-                    .build() // Constrói
+        return animeRepository.save(
+            AnimeMapper.INSTANCE.toAnime(animePostRequestBody) // Mapper fará a transformacao do obj
         );
+
+        // V2.0
+        // return animeRepository.save( // Chama o repository para salvar
+        //     Anime.builder() // Construtor estático criado no modelo pelo Lombok
+        //             .name(animePostRequestBody.getName()) // indica o dado ao construtor
+        //             .build() // Constrói
+        // );
         
+        // V1.0
         // anime.setId(ThreadLocalRandom.current().nextLong(4, 100000)); // Pega um número aleatório
         // animes.add(anime);
         // return anime;
@@ -69,13 +76,24 @@ public class AnimeService {
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
 
-        findByIdOrThrowBadRequestException(animePutRequestBody.getId());
-        animeRepository.save(
-            Anime.builder()
-                    .id(animePutRequestBody.getId())
-                    .name(animePutRequestBody.getName())
-                    .build()
-        );
+        Anime savedAnime = findByIdOrThrowBadRequestException(animePutRequestBody.getId()); // Procura o anime
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody); // Transforma em anime
+        anime.setId(savedAnime.getId());  // Recupera o id e adiciona no anime
+
+        animeRepository.save(anime);
+
+
+
+        // V2.0
+        // findByIdOrThrowBadRequestException(animePutRequestBody.getId());
+        // animeRepository.save(
+        //     Anime.builder()
+        //             .id(animePutRequestBody.getId())
+        //             .name(animePutRequestBody.getName())
+        //             .build()
+        // );
+
+        // V1.0
         // delete(anime.getId()); // Procura e deleta. Se não achar, Erro Bad_request
         // animes.add(anime); // Adiciona Anime à lista
     }

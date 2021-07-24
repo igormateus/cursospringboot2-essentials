@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * Classe criada com a função de validar os dados inseridos antes de seguir pela
- * aplicação
+ * aplicação (Padrao de projetos DTO)
  */
 @Data
 public class AnimePostRequestBody {

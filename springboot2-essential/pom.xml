@@ -18,11 +18,23 @@
 	<name>springboot2-essential</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+
+		<!-- Versão do java -->
 		<java.version>16</java.version>
+
+		<!-- Versao do mapstruct -->
+		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 	</properties>
 
 	<!-- Dependencias -->
 	<dependencies>
+
+		<!-- Usado para mapear dados -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+        	<artifactId>mapstruct</artifactId>
+        	<version>${org.mapstruct.version}</version>
+		</dependency>
 
 		<!-- Acesso ao banco de dados pelo JPA -->
 		<dependency>
@@ -76,6 +88,24 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- Pluguin do mapstruct -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>16</source>
+					<target>16</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${org.mapstruct.version}</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
