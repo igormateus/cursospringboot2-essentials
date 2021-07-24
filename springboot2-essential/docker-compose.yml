@@ -13,7 +13,7 @@ services:
 volumes:
     springboot2_data:
 
-# docker-compose up   # para subir aplicacao
+# docker-compose up   # para subir aplicacao à partir da pasta onde o spring está
 # docker-ps           # lista containers em execução # -a Lista todos
 # CTRL + C            # parar container
 # docker-compose down # Retira container mas volume não é perdido

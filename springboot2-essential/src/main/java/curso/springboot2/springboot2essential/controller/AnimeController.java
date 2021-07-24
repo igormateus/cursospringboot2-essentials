@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import curso.springboot2.springboot2essential.domain.Anime;
+import curso.springboot2.springboot2essential.requests.AnimePostRequestBody;
+import curso.springboot2.springboot2essential.requests.AnimePutRequestBody;
 import curso.springboot2.springboot2essential.service.AnimeService;
 import curso.springboot2.springboot2essential.util.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +61,7 @@ public class AnimeController {
             Long id
     ){
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return ResponseEntity.ok(animeService.findById(id));
+        return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
 
     @PostMapping // Spring mapeia e joga aqui as requisições post
@@ -67,12 +69,12 @@ public class AnimeController {
     // Ou retornar o ID criado, ou até mesmo o objeto inteiro criado
     // @ResponseStatus(HttpStatus.CREATED) // Indica que esse status será 201 - Created
     public ResponseEntity<Anime> save( // Nesse caso nós iremos retornar o objeto inteiro
-            @RequestBody Anime anime // Diz que está esperando um Body e usará o Jackson para 
+            @RequestBody AnimePostRequestBody animePostRequestBody // Diz que está esperando um Body e usará o Jackson para 
                                      // Transformar em Anime. Se o Jakson encontrar um JSON exatamente
                                      // igual aos atributos de classe ele mapeia. Caso o nome da var
                                      // seja diferente, o Jackson ignora a propriedade.
     ) { 
-        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+        return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}") // Cria um caminho de metodo delete para o path
@@ -82,8 +84,8 @@ public class AnimeController {
     }
 
     @PutMapping // Cria um caminho para método put
-    public ResponseEntity<Void> replace(@RequestBody Anime anime) {
-        animeService.replace(anime); 
+    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
+        animeService.replace(animePutRequestBody); 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Não retorna nada e vazio
     }
 }

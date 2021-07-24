@@ -1,56 +1,82 @@
 package curso.springboot2.springboot2essential.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import curso.springboot2.springboot2essential.domain.Anime;
+import curso.springboot2.springboot2essential.repository.AnimeRepository;
+import curso.springboot2.springboot2essential.requests.AnimePostRequestBody;
+import curso.springboot2.springboot2essential.requests.AnimePutRequestBody;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * Classe responsavel pela regra/lógica de negocio
  */
 @Service // Para tornar a classe um servico e Bean do Spring
+@RequiredArgsConstructor // Diz ao Spring para preencher os campos automaticamente
 public class AnimeService {
 
-    private static List<Anime> animes;
-    static {
-        animes = new ArrayList<>(List.of(new Anime(1L, "DBZ"), new Anime(2L, "Berseker"), new Anime(3L, "Boku No Hero")));
-    } 
+    // private static List<Anime> animes;
+    // static {
+    //     animes = new ArrayList<>(List.of(new Anime(1L, "DBZ"), new Anime(2L, "Berseker"), new Anime(3L, "Boku No Hero")));
+    // } 
 
-    // private final AnimeRepository animeRepository;
+    private final AnimeRepository animeRepository;
 
     public List<Anime> listAll() { // Metodo de exemplo mas n queremos dar acesso all na vida real
-        return animes;
+        return animeRepository.findAll();
     }
 
-    public Anime findById(Long id) { // Metodo de exemplo mas n queremos dar acesso all na vida real
-        return animes
-                .stream() // Retorna um Stream sequencial com a coleção
-                .filter(anime -> anime.getId().equals(id)) // executa função anonima em todos os elementos 
-                                                           // e retorna os que passam como verdadeiros
-                .findFirst() // Retorna um Optional do primeiro elemento ou vazio
-                .orElseThrow(() -> new ResponseStatusException( // Caso não encontre nada levanta erro
-                        HttpStatus.BAD_REQUEST, // Determina tipo de saída, definido no padrão de projeto
-                        "Anime not found" // Determina mensagem de retorno
-        ));
+    public Anime findByIdOrThrowBadRequestException(Long id) { // Metodo de exemplo mas n queremos dar acesso all na vida real
+        
+        return animeRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not found"));
+
+        // return animes
+        //         .stream() // Retorna um Stream sequencial com a coleção
+        //         .filter(anime -> anime.getId().equals(id)) // executa função anonima em todos os elementos 
+        //                                                    // e retorna os que passam como verdadeiros
+        //         .findFirst() // Retorna um Optional do primeiro elemento ou vazio
+        //         .orElseThrow(() -> new ResponseStatusException( // Caso não encontre nada levanta erro
+        //                 HttpStatus.BAD_REQUEST, // Determina tipo de saída, definido no padrão de projeto
+        //                 "Anime not found" // Determina mensagem de retorno
+        // ));
     }
 
-    public Anime save(Anime anime) {
-        anime.setId(ThreadLocalRandom.current().nextLong(4, 100000)); // Pega um número aleatório
-        animes.add(anime);
-        return anime;
+    public Anime save(AnimePostRequestBody animePostRequestBody) {
+
+        return animeRepository.save( // Chama o repository para salvar
+            Anime.builder() // Construtor estático criado no modelo pelo Lombok
+                    .name(animePostRequestBody.getName()) // indica o dado ao construtor
+                    .build() // Constrói
+        );
+        
+        // anime.setId(ThreadLocalRandom.current().nextLong(4, 100000)); // Pega um número aleatório
+        // animes.add(anime);
+        // return anime;
     }
 
     public void delete(Long id) { // RFC7231 - Indepotência
-        animes.remove(findById(id)); // Caso encontre, ele remove, caso não, ele retorna bad_request
+        
+        animeRepository.delete(findByIdOrThrowBadRequestException(id));
+        
+        // animes.remove(findById(id)); // Caso encontre, ele remove, caso não, ele retorna bad_request
     }
 
-    public void replace(Anime anime) {
-        delete(anime.getId()); // Procura e deleta. Se não achar, Erro Bad_request
-        animes.add(anime); // Adiciona Anime à lista
+    public void replace(AnimePutRequestBody animePutRequestBody) {
+
+        findByIdOrThrowBadRequestException(animePutRequestBody.getId());
+        animeRepository.save(
+            Anime.builder()
+                    .id(animePutRequestBody.getId())
+                    .name(animePutRequestBody.getName())
+                    .build()
+        );
+        // delete(anime.getId()); // Procura e deleta. Se não achar, Erro Bad_request
+        // animes.add(anime); // Adiciona Anime à lista
     }
 }

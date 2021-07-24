@@ -24,6 +24,18 @@
 	<!-- Dependencias -->
 	<dependencies>
 
+		<!-- Acesso ao banco de dados pelo JPA -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- Definindo o conector do banco de dados -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
 		<!-- Implementa o HotSwap -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
