@@ -32,6 +32,10 @@ public class AnimeService {
         return animeRepository.findAll();
     }
 
+    public List<Anime> findByName(String name) {
+        return animeRepository.findByName(name);
+    }
+
     public Anime findByIdOrThrowBadRequestException(Long id) { // Metodo de exemplo mas n queremos dar acesso all na vida real
         
         return animeRepository.findById(id)

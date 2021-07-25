@@ -1,5 +1,7 @@
 package curso.springboot2.springboot2essential.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import curso.springboot2.springboot2essential.domain.Anime;
@@ -14,4 +16,5 @@ public interface AnimeRepository extends
         >              // Métodos do Jpa de pesquisa são baseados no nome dele
 {
     
+    List<Anime> findByName(String name); // O Spring JPA se encarrega de criar a consulta.
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import curso.springboot2.springboot2essential.domain.Anime;
@@ -62,6 +63,15 @@ public class AnimeController {
     ){
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
+    }
+    
+    @GetMapping(path = "/find")
+    public ResponseEntity<List<Anime>> findByName(@RequestParam String name){ // Entende o parâmetro na URL (depois da ?)
+        // @RequestParam(required = false) - Parametro não é mais obrigatório
+        // @RequestParam(defaultValue = "") - Insere padrão default, normalmente é null
+        // Vários Requests podem ser inseridos com & para dividir na URL
+        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        return ResponseEntity.ok(animeService.findByName(name));
     }
 
     @PostMapping // Spring mapeia e joga aqui as requisições post
