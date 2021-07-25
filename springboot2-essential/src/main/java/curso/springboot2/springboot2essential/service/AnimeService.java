@@ -2,11 +2,10 @@ package curso.springboot2.springboot2essential.service;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import curso.springboot2.springboot2essential.domain.Anime;
+import curso.springboot2.springboot2essential.exception.BadRequestException;
 import curso.springboot2.springboot2essential.mapper.AnimeMapper;
 import curso.springboot2.springboot2essential.repository.AnimeRepository;
 import curso.springboot2.springboot2essential.requests.AnimePostRequestBody;
@@ -39,7 +38,7 @@ public class AnimeService {
     public Anime findByIdOrThrowBadRequestException(Long id) { // Metodo de exemplo mas n queremos dar acesso all na vida real
         
         return animeRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not found"));
+                .orElseThrow(() -> new BadRequestException("Anime not found"));
 
         // return animes
         //         .stream() // Retorna um Stream sequencial com a coleção
