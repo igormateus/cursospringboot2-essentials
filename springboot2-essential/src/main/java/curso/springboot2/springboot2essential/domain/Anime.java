@@ -23,6 +23,9 @@ public class Anime {
     @Id // Indica que esse é o id da aplicação
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Indica que o banco gera esse campo
     private Long id;
+
+    // @Column(nullable = false) // indica que não é nullable, mas não atualiza automaticamente o banco de dados
+                                 // Não precisa do validation
     // @JsonProperty("name_wanted") // Indica para o Jackson que essa propriedade se chamará name_wanted no json
     private String name;
 }

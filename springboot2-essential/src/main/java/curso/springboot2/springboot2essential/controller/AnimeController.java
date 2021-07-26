@@ -3,6 +3,8 @@ package curso.springboot2.springboot2essential.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -79,7 +81,7 @@ public class AnimeController {
     // Ou retornar o ID criado, ou até mesmo o objeto inteiro criado
     // @ResponseStatus(HttpStatus.CREATED) // Indica que esse status será 201 - Created
     public ResponseEntity<Anime> save( // Nesse caso nós iremos retornar o objeto inteiro
-            @RequestBody AnimePostRequestBody animePostRequestBody // Diz que está esperando um Body e usará o Jackson para 
+            @RequestBody @Valid AnimePostRequestBody animePostRequestBody // Diz que está esperando um Body e usará o Jackson para 
                                      // Transformar em Anime. Se o Jakson encontrar um JSON exatamente
                                      // igual aos atributos de classe ele mapeia. Caso o nome da var
                                      // seja diferente, o Jackson ignora a propriedade.

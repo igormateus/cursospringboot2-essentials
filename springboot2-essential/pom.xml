@@ -29,6 +29,12 @@
 	<!-- Dependencias -->
 	<dependencies>
 
+		<!-- Dependencia usada para validação dos dados -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
 		<!-- Usado para mapear dados -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
