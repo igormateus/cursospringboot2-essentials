@@ -1,7 +1,6 @@
 package curso.springboot2.springboot2essential.requests;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
