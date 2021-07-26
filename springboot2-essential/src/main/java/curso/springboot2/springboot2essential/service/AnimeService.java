@@ -3,6 +3,7 @@ package curso.springboot2.springboot2essential.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import curso.springboot2.springboot2essential.domain.Anime;
 import curso.springboot2.springboot2essential.exception.BadRequestException;
@@ -51,6 +52,10 @@ public class AnimeService {
         // ));
     }
 
+    @Transactional // Indica para o spring que é uma transação e acontecerá rollback em caso de erro.
+                   // Em caso de erros thows Erro, é necessário usar @Transaction(rollBackFor = Exception.class)
+                   // isto para que ele leve em conta tambem as transações do tipo Checked. Não é aconselhado
+                   // usar desta forma (rollBackFor)
     public Anime save(AnimePostRequestBody animePostRequestBody) {
 
         return animeRepository.save(
