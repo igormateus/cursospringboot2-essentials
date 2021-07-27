@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,10 +49,10 @@ public class AnimeController {
     // localhost:8080/animes/list
     // @GetMapping(path = "list") // Indica que ele sera chamado no metodo GET para o endereco '/list'
     @GetMapping // Spring mapeia e joga aqui requisições GET na raiz
-    public ResponseEntity<List<Anime>> list() {
+    public ResponseEntity<Page<Anime>> list(Pageable pageable) {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); //Registra um log na tela de output
         return new ResponseEntity<>( // Tipo de saída de uma response
-                animeService.listAll(), // Conteudo da resposta que passará no JSON
+                animeService.listAll(pageable), // Conteudo da resposta que passará no JSON
                 HttpStatus.OK // Indica o status da resposta
         );
 

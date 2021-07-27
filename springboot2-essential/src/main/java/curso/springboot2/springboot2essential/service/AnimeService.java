@@ -2,6 +2,8 @@ package curso.springboot2.springboot2essential.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +30,8 @@ public class AnimeService {
 
     private final AnimeRepository animeRepository;
 
-    public List<Anime> listAll() { // Metodo de exemplo mas n queremos dar acesso all na vida real
-        return animeRepository.findAll();
+    public Page<Anime> listAll(Pageable pageable) { // Metodo de exemplo mas n queremos dar acesso all na vida real
+        return animeRepository.findAll(pageable);
     }
 
     public List<Anime> findByName(String name) {
