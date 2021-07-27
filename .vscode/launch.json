@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch SpringClient",
+            "request": "launch",
+            "mainClass": "curso.springboot2.springboot2essential.client.SpringClient",
+            "projectName": "springboot2-essential"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-Springboot2EssentialApplication<springboot2-essential>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

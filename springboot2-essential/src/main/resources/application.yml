@@ -25,3 +25,5 @@ logging:
         org:
             hibernate:
                 SQL: DEBUG
+                # Mostra os valores imputados no banco
+                # type: trace
