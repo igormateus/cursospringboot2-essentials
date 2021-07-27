@@ -59,6 +59,13 @@ public class AnimeController {
         // return ResponseEntity.ok(animeService.listAll()); // Outra forma de responder
     }
 
+    // Adicionado para testes no restTemplate Exchange
+    @GetMapping(path = "/all")
+    public ResponseEntity<List<Anime>> listAll() {
+        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        return ResponseEntity.ok(animeService.listAllNonPageable());
+    }
+
     @GetMapping(path = "/{id}") // Não pode ser duplicado sem um endpoint distinto;
     // o tempo entre {} será o pathvareables chamado pelo @PathVariable
     public ResponseEntity<Anime> findById(

@@ -1,5 +1,10 @@
 package curso.springboot2.springboot2essential.client;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,5 +32,19 @@ public class SpringClient {
             2);
 
         log.info(object);
+
+        Anime[] animes = new RestTemplate().getForObject( // Traz a lista, mas não é usual (arrays)
+            "http://localhost:8080/animes/all",
+            Anime[].class);
+
+        log.info(Arrays.toString(animes));
+
+        ResponseEntity<List<Anime>> animeList = new RestTemplate().exchange( // Transforma em lista
+            "http://localhost:8080/animes/all", 
+            HttpMethod.GET, // Método de pedido
+            null, // RequestEntity, que pode receber post e método de autenticação
+            new ParameterizedTypeReference<>() {}); // Transforma na lista passada no tipo da variável
+
+        log.info(animeList.getBody());
     }
 }
