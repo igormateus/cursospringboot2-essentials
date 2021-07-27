@@ -17,4 +17,11 @@ spring:
         hibernate:
             ddl-auto: update
         # Pede que a consulta seja apresentada em log        
-        show-sql: true
+        # show-sql: true
+
+# Para apresentar em tela a consulta enviada ao banco de dados
+logging:
+    level:
+        org:
+            hibernate:
+                SQL: DEBUG
