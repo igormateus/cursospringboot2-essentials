@@ -64,7 +64,7 @@ public class SpringClient {
 
         log.info("Saved anime {}", kingdomSaved);
 
-        log.info("--- RestTemplate().exchange ---"); // Exchange é poderoso por poder passar Headers
+        log.info("--- RestTemplate().exchange SAVE ---"); // Exchange é poderoso por poder passar Headers
         Anime samuraiChamploo = Anime.builder().name("Samurai Champloo").build();
         ResponseEntity<Anime> samuraiChamplooSaved = new RestTemplate().exchange(
             "http://localhost:8080/animes/", // url, 
@@ -75,6 +75,36 @@ public class SpringClient {
             // .getBody() para pegar diretamente o valor
 
         log.info("Saved anime {}", samuraiChamplooSaved);
+
+        
+        // Put e Delete retornam void, por isso, pode ser usado o exchange
+        Anime animeToBeUpdated = samuraiChamplooSaved.getBody();
+        animeToBeUpdated.setName("Samurai Champloo 2");
+        log.info("--- RestTemplate().exchange PUT ---"); // Exchange é poderoso por poder passar Headers
+        ResponseEntity<Void> samuraiChamplooUpdated = new RestTemplate().exchange(
+            "http://localhost:8080/animes/", // url, 
+            HttpMethod.PUT, // Method
+            new HttpEntity<>(animeToBeUpdated, createJsonHeader()), // request Entity, 
+            Void.class); // responseType, 
+            // uriVariables)
+            // .getBody() para pegar diretamente o valor
+
+        log.info("Saved updated {}", samuraiChamplooUpdated);
+
+
+        log.info("--- RestTemplate().exchange DELETE ---"); // Exchange é poderoso por poder passar Headers
+        ResponseEntity<Void> samuraiChamplooDelete = new RestTemplate().exchange(
+            "http://localhost:8080/animes/{id}", // url, 
+            HttpMethod.DELETE, // Method
+            null, // request Entity, 
+            Void.class, // responseType, 
+            animeToBeUpdated.getId());// uriVariables)
+            // .getBody() para pegar diretamente o valor
+
+            // Casso fosse necessário, poderia fazer tratamento de erro em retorno diferente do retorno #200
+
+        log.info(samuraiChamplooDelete);
+
     }
 
     private static HttpHeaders createJsonHeader() {
