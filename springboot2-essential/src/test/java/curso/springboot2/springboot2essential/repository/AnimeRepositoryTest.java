@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import curso.springboot2.springboot2essential.domain.Anime;
+import curso.springboot2.springboot2essential.util.AnimeCreator;
 
 /**
  * Classe serve para testar funções do Repository
@@ -29,7 +30,7 @@ public class AnimeRepositoryTest {
     @Test // Notação para indicar função de teste
     @DisplayName("Save persists anime when Successful")
     public void save_PersistAnime_WhenSuccessful() {
-        Anime animeToBeSaved = createAnime(); // Crio anime
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved(); // Crio anime
         Anime animeSaved = this.animeRepository.save(animeToBeSaved); // Salvo em repositório
 
         // Asserções para validar se anime foi salvo
@@ -46,7 +47,7 @@ public class AnimeRepositoryTest {
     @Test
     @DisplayName("Save update anime when Sucessful")
     public void save_UpdatesAnime_WhenSuccessful() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
         animeSaved.setName("Overlord");
         Anime animeUpdated = this.animeRepository.save(animeSaved);
@@ -59,7 +60,7 @@ public class AnimeRepositoryTest {
     @Test
     @DisplayName("Delete removes anime when Sucessful")
     public void delete_RemovesAnime_WhenSuccessful() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
         this.animeRepository.delete(animeSaved);
 
@@ -71,7 +72,7 @@ public class AnimeRepositoryTest {
     @Test
     @DisplayName("Find By Name returns list of anime when Sucessful")
     public void findByName_ReturnsListOfAnime_WhenSuccessful() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
         String name = animeSaved.getName();
@@ -109,9 +110,4 @@ public class AnimeRepositoryTest {
                 // Mensagem de retorno
     }
 
-    private Anime createAnime() {
-        return Anime.builder()
-                .name("Hajime no Ippo")
-                .build();
-    }
 }

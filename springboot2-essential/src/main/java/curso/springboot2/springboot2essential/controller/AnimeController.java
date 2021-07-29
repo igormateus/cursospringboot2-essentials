@@ -1,6 +1,6 @@
 package curso.springboot2.springboot2essential.controller;
 
-import java.time.LocalDateTime;
+// import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -23,9 +23,9 @@ import curso.springboot2.springboot2essential.domain.Anime;
 import curso.springboot2.springboot2essential.requests.AnimePostRequestBody;
 import curso.springboot2.springboot2essential.requests.AnimePutRequestBody;
 import curso.springboot2.springboot2essential.service.AnimeService;
-import curso.springboot2.springboot2essential.util.DateUtil;
+// import curso.springboot2.springboot2essential.util.DateUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+// import lombok.extern.log4j.Log4j2;
 
 /**
  * Classe criada para controlar os endpoints
@@ -34,7 +34,7 @@ import lombok.extern.log4j.Log4j2;
 // todos os metodos terao @ResponseBody indicando que os retornos serao apenas Strings
 // que eh o que queremos quando estamos desenvolvendo APIs (Valor JSON)
 @RequestMapping("animes") // indica que todas os metodos deverao passar pelo endereco '/animes'
-@Log4j2 // Anotacao do Lombok para registro de log
+// @Log4j2 // Anotacao do Lombok para registro de log
 // @AllArgsConstructor // Notacao que cria contrutor com todos os atributos inicializados
 // retira a necessidade de usar o @Autowired
 @RequiredArgsConstructor // Cria um construtor com todos os campos que sao finais
@@ -42,7 +42,7 @@ import lombok.extern.log4j.Log4j2;
 public class AnimeController {
 
     // @Autowired //Injecao de dependencia do spring, Classe injetada precisa ser @Component
-    private final DateUtil dateUtil;
+    // private final DateUtil dateUtil;
 
     private final AnimeService animeService;
 
@@ -50,7 +50,7 @@ public class AnimeController {
     // @GetMapping(path = "list") // Indica que ele sera chamado no metodo GET para o endereco '/list'
     @GetMapping // Spring mapeia e joga aqui requisições GET na raiz
     public ResponseEntity<Page<Anime>> list(Pageable pageable) {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); //Registra um log na tela de output
+        // log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now())); //Registra um log na tela de output
         return new ResponseEntity<>( // Tipo de saída de uma response
                 animeService.listAll(pageable), // Conteudo da resposta que passará no JSON
                 HttpStatus.OK // Indica o status da resposta
@@ -62,7 +62,7 @@ public class AnimeController {
     // Adicionado para testes no restTemplate Exchange
     @GetMapping(path = "/all")
     public ResponseEntity<List<Anime>> listAll() {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        // log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok(animeService.listAllNonPageable());
     }
 
@@ -72,7 +72,7 @@ public class AnimeController {
             @PathVariable // indica que a próxima variavel será preenchida com o id do endpoint
             Long id
     ){
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        // log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
     
@@ -81,7 +81,7 @@ public class AnimeController {
         // @RequestParam(required = false) - Parametro não é mais obrigatório
         // @RequestParam(defaultValue = "") - Insere padrão default, normalmente é null
         // Vários Requests podem ser inseridos com & para dividir na URL
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        // log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok(animeService.findByName(name));
     }
 
