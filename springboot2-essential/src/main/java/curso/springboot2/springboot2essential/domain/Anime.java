@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,5 +28,6 @@ public class Anime {
     // @Column(nullable = false) // indica que não é nullable, mas não atualiza automaticamente o banco de dados
                                  // Não precisa do validation
     // @JsonProperty("name_wanted") // Indica para o Jackson que essa propriedade se chamará name_wanted no json
+    @NotEmpty(message= "The anime name cannot be empty")
     private String name;
 }
