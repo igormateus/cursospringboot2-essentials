@@ -81,12 +81,21 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 			<exclusions>
+				<!-- Exclui versão antiga do Junit para testes -->
 				<exclusion>
 					<groupId>org.junit.vintage</groupId>
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- H2 BD em memória para testes unitários de BD -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
