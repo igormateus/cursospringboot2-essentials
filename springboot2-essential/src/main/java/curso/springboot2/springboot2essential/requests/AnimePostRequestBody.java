@@ -2,6 +2,7 @@ package curso.springboot2.springboot2essential.requests;
 
 import javax.validation.constraints.NotEmpty;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Data;
  * aplicação (Padrao de projetos DTO)
  */
 @Data
+@Builder
 public class AnimePostRequestBody {
     @NotEmpty(message= "The anime name cannot be empty") // Usa depedencia validation e indica que não pode ser vazio com essa msg
                                                          // O controller deve receber @Valid para que ele faça a validação automática
