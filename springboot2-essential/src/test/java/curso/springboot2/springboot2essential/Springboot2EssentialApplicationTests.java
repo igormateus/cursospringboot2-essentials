@@ -1,12 +1,12 @@
 package curso.springboot2.springboot2essential;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+// @SpringBootTest
 class Springboot2EssentialApplicationTests {
 
-	@Test
+	// @Test
 	void contextLoads() {
 	}
 
