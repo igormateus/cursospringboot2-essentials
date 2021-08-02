@@ -20,7 +20,7 @@ public class SpringCursoWebMvcConfigurer implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         PageableHandlerMethodArgumentResolver pageHandler = new PageableHandlerMethodArgumentResolver();
         pageHandler.setFallbackPageable(PageRequest.of(
-            1, // Pagina inicialmente apresentada 0 = primeira página, 1 = segunda página...
+            0, // Pagina inicialmente apresentada 0 = primeira página, 1 = segunda página...
             5)); // Tamanho das paginas exibidas
         resolvers.add(pageHandler);
     }
