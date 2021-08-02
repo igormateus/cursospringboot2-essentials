@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -35,7 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Nesse método indicamos o que está sendo protegido com o método Http.
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .csrf().disable()   // Desabilita o CSRF TOKEN
+                // .csrf() // Adiciona o CSRF TOKEN
+                // .csrfTokenRepository( // Tipo do token
+                    // CookieCsrfTokenRepository.withHttpOnlyFalse()) // Indica que será salvo no cooke
+                    // Aplicações de front não conseguiram pegar o valor do cookie
+                    // com o WithHttpOnly, eles passam a conseguir
+            // .and()
+                .authorizeRequests()// Autenticação para toda URL adicionando ADMIN e USER in ROLEs
                 .anyRequest()       // Qualquer requisição
                 .authenticated()    // Deve ser autenticada
             .and()
