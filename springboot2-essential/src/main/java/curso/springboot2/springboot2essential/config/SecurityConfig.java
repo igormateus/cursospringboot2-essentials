@@ -20,6 +20,14 @@ import lombok.extern.log4j.Log4j2;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //Usado para configurar o usuário em memória
+    /**
+     * BasicAuthenticationFilter - Autenticação básica com Base64 encoder (usuario.senha)
+     * UsernamePasswordAuthenticationFilter
+     * DefaultLoginPageGeneratingFilter - Página que gera o login
+     * DefaultLogoutPageGeneratingFilter
+     * FilterSecurityInterceptor - Classe que checa se vc está logado
+     * Authentication - Authorization <=> Autentica (é quem diz que é) - Autoriza (Tem acesso à funções)
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -50,7 +58,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()       // Qualquer requisição
                 .authenticated()    // Deve ser autenticada
             .and()
+                .formLogin()        // Adiciona página de login na aplicação
+            .and()
                 .httpBasic();        // Deve ser na forma HTTP Basic
+
     }
     
 }
