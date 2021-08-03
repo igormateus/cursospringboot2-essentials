@@ -9,6 +9,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 // import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+import curso.springboot2.springboot2essential.service.CursoSpringUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -17,7 +19,10 @@ import lombok.extern.log4j.Log4j2;
 @EnableWebSecurity // É Configuration e Component, por isso é carregado com a aplicação
 @Log4j2
 @EnableGlobalMethodSecurity(prePostEnabled = true) // Autoriza @PreAuthorize dos controllers
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final CursoSpringUserDetailsService cursoSpringUserDetailsService;
 
     //Usado para configurar o usuário em memória
     /**
@@ -31,16 +36,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        log.info("Password encoded {}", passwordEncoder.encode("test"));
+        log.info("Password encoded {}", passwordEncoder.encode("curso"));
 
+        // A configuração do spring aceita multipla auteticação com diferentes providers
+        // Ex Archive, directory, in memory, Bd
+        // Nesse caso ele busca na ordem em que os dados são colocados abaixo
+
+        // Buscando em memória
         auth.inMemoryAuthentication()                       // Autenticação em memória
-                .withUser("igor")                           // Adiciona usuário
+                .withUser("igor2")                          // Adiciona usuário
                 .password(passwordEncoder.encode("curso"))  // Adiciona senha
                 .roles("USER", "ADMIN")                     // Adiciona regras de acesso padrões do usuário
             .and()
-                .withUser("curso")                          // Adiciona novo usuário
+                .withUser("curso2")                         // Adiciona novo usuário
                 .password(passwordEncoder.encode("curso"))  // Adiciona senha
                 .roles("USER");                             // Adiciona regras de acesso do usuário
+
+        // Buscando do banco de dados
+        auth.userDetailsService(cursoSpringUserDetailsService)  // Indica o usuário para autenticação
+                .passwordEncoder(passwordEncoder);              // Indica tipo de codificação da senha
     }
 
     // Nesse método indicamos o que está sendo protegido com o método Http.
