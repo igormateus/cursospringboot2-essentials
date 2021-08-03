@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+// import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -80,7 +80,6 @@ public class AnimeController {
     }
 
     @GetMapping(path = "by-id/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Anime> findByIdAuthenticationPrincipal(@PathVariable Long id,
             @AuthenticationPrincipal UserDetails userDetails){ //Forma de pegar o usuário logado
         return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
@@ -99,7 +98,7 @@ public class AnimeController {
     // Temos a possibilidade de retornar apenas o cod 201 (created)
     // Ou retornar o ID criado, ou até mesmo o objeto inteiro criado
     // @ResponseStatus(HttpStatus.CREATED) // Indica que esse status será 201 - Created
-    @PreAuthorize("hasRole('ADMIN')") // Pré autorize através de alguma Role. Nesse caso ADMIN
+    // @PreAuthorize("hasRole('ADMIN')") // Pré autorize através de alguma Role. Nesse caso ADMIN
     public ResponseEntity<Anime> save( // Nesse caso nós iremos retornar o objeto inteiro
             @RequestBody @Valid AnimePostRequestBody animePostRequestBody // Diz que está esperando um Body e usará o Jackson para 
                                      // Transformar em Anime. Se o Jakson encontrar um JSON exatamente
@@ -109,7 +108,7 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
-    @DeleteMapping(path = "/{id}") // Cria um caminho de metodo delete para o path
+    @DeleteMapping(path = "/admin/{id}") // Cria um caminho de metodo delete para o path
     public ResponseEntity<Void> delete(@PathVariable Long id) { // Void pq n tem retorno
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

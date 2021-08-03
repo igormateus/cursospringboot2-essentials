@@ -69,6 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     // com o WithHttpOnly, eles passam a conseguir
             // .and()
                 .authorizeRequests()// Autenticação para toda URL adicionando ADMIN e USER in ROLEs
+                .antMatchers("/animes/admin/**").hasRole("ADMIN")  // Indica que todo endereço /admin pedirá role admin
+                .antMatchers("/animes/**").hasRole("USER")         // Indica que todo endereço pedira role user
                 .anyRequest()       // Qualquer requisição
                 .authenticated()    // Deve ser autenticada
             .and()
